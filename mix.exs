@@ -1,12 +1,15 @@
 defmodule WebDevUtils.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/elixir-tools/web_dev_utils"
+
   def project do
     [
       app: :web_dev_utils,
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
+      package: package(),
       deps: deps()
     ]
   end
@@ -21,10 +24,23 @@ defmodule WebDevUtils.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:file_system, "~> 0.2"}
+      {:file_system, "~> 0.2"},
+      {:ex_doc, ">= 0.0.0", only: :dev}
 
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+    ]
+  end
+
+  defp package() do
+    [
+      maintainers: ["Mitchell Hanberg"],
+      licenses: ["MIT"],
+      links: %{
+        GitHub: @source_url,
+        Sponsor: "https://github.com/sponsors/mhanberg"
+      },
+      files: ~w(lib LICENSE mix.exs README.md .formatter.exs)
     ]
   end
 end
