@@ -1,6 +1,16 @@
 # WebDevUtils
 
-**TODO: Add description**
+WebDevUtils is a library to enable awesome local development for websites and web applications.
+
+## Features
+
+- Asset watchers (run CSS/JS tooling when you boot up your server)
+- Live Reload (make the browser refresh when files change on disk)
+- Code Reloading (make your Elixir files recompile)
+
+## Usage
+
+TODO
 
 ## Installation
 
