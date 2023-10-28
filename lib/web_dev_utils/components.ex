@@ -5,7 +5,7 @@ defmodule WebDevUtils.Components do
   require EEx
 
   @doc """
-  A component for triggering live reloading.
+  A component for triggering live reloading via a websocket
   """
   EEx.function_from_string(
     :def,
@@ -19,7 +19,7 @@ defmodule WebDevUtils.Components do
       }
       function connect() {
         try {
-          window.socket = new WebSocket('wss://' + location.host + '/ws');
+          window.socket = new WebSocket(<%= Application.get_env(:web_dev_utils, :reload_url, "'ws://' + location.host + '/ws'") %>);
 
           window.socket.onmessage = function(e) {
             if (e.data === "reload") {
