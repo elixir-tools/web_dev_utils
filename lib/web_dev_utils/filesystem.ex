@@ -1,0 +1,11 @@
+defmodule WebDevUtils.FileSystem do
+  @moduledoc false
+  def child_spec(_) do
+    %{
+      id: FileSystem,
+      start:
+        {FileSystem, :start_link,
+         [[dirs: [Path.absname("")], name: :web_dev_utils_file_watcher, latency: 0]]}
+    }
+  end
+end
