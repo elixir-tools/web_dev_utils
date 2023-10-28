@@ -1,5 +1,7 @@
 defmodule WebDevUtils.FileSystem do
-  @moduledoc false
+  @moduledoc """
+  The file watcher process.
+  """
   def child_spec(_) do
     %{
       id: FileSystem,

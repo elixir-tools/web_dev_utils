@@ -1,8 +1,9 @@
 # module mostly taken from `Phoenix.Endpoint.Watcher`
-# copyright belongs to them.
 
 defmodule WebDevUtils.Assets do
-  @moduledoc false
+  @moduledoc """
+  Task for starting arbitrary commands and Elixir modules (like `Tailwind` and `Esbuild`).
+  """
   require Logger
 
   def child_spec(args) do

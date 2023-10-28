@@ -1,5 +1,7 @@
 defmodule WebDevUtils.CodeReloader do
-  @moduledoc false
+  @moduledoc """
+  The code reloader process.
+  """
 
   # Handles automatic code reloading.
 

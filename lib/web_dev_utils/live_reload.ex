@@ -1,5 +1,7 @@
 defmodule WebDevUtils.LiveReload do
-  @moduledoc false
+  @moduledoc """
+  Notifications (usually sent to a web browser) when files on disk change.
+  """
   require Logger
 
   def init(opts \\ []) do
