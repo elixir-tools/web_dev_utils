@@ -22,7 +22,7 @@ by adding `web_dev_utils` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:web_dev_utils, "~> 0.1.1"}
+    {:web_dev_utils, "~> 0.2.0"}
   ]
 end
 ```
