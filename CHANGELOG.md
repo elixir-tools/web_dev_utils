@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/elixir-tools/web_dev_utils/compare/v0.1.0...v0.1.1) (2024-10-11)
+
+
+### Bug Fixes
+
+* bump file_system to v1.0 ([#2](https://github.com/elixir-tools/web_dev_utils/issues/2)) ([237f471](https://github.com/elixir-tools/web_dev_utils/commit/237f471d64d43eea8dd2c8dcbee208ed2ac26d0b))
+
 ## 0.1.0 (2023-10-28)
 
 
