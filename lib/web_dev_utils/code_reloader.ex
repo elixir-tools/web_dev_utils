@@ -50,4 +50,3 @@ defmodule WebDevUtils.CodeReloader do
     Mix.Task.run("compile.elixir")
   end
 end
-
