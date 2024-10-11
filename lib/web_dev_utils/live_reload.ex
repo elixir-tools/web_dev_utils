@@ -12,54 +12,27 @@ defmodule WebDevUtils.LiveReload do
 
   def reload!({:file_event, _watcher_pid, {path, _event}}, opts \\ []) do
     patterns = Keyword.get(opts, :patterns, [])
-    debounce = Keyword.get(opts, :debounce, 0)
-    callback = Keyword.get(opts, :callback, &Function.identity/1)
+    debounce = Keyword.get(opts, :debounce, 100)
 
-    if matches_any_pattern?(path, patterns) do
-      ext = Path.extname(path)
+    Process.sleep(debounce)
 
-      for {path, ext} <- [{path, ext} | debounce(debounce, [ext], patterns)] do
-        asset_type = remove_leading_dot(ext)
-        Logger.debug("Live reload: #{Path.relative_to_cwd(path)}")
+    paths = flush([Path.relative_to_cwd(to_string(path))])
 
-        callback.(path)
+    path = Enum.find(paths, fn path -> Enum.any?(patterns, &String.match?(path, &1)) end)
 
-        send(self(), {:reload, asset_type})
-      end
+    if path do
+      Logger.debug("Live reload: #{Path.relative_to_cwd(path)}")
+
+      send(self(), :reload)
     end
   end
 
-  defp debounce(0, _exts, _patterns), do: []
-
-  defp debounce(time, exts, patterns) when is_integer(time) and time > 0 do
-    Process.send_after(self(), :debounced, time)
-    debounce(exts, patterns)
-  end
-
-  defp debounce(exts, patterns) do
+  defp flush(acc) do
     receive do
-      :debounced ->
-        []
-
-      {:file_event, _pid, {path, _event}} ->
-        ext = Path.extname(path)
-
-        if matches_any_pattern?(path, patterns) and ext not in exts do
-          [{path, ext} | debounce([ext | exts], patterns)]
-        else
-          debounce(exts, patterns)
-        end
+      {:file_event, _, {path, _event}} ->
+        flush([Path.relative_to_cwd(to_string(path)) | acc])
+    after
+      0 -> acc
     end
   end
-
-  defp matches_any_pattern?(path, patterns) do
-    path = to_string(path)
-
-    Enum.any?(patterns, fn pattern ->
-      String.match?(path, pattern) and not String.match?(path, ~r{(^|/)_build/})
-    end)
-  end
-
-  defp remove_leading_dot("." <> rest), do: rest
-  defp remove_leading_dot(rest), do: rest
 end
