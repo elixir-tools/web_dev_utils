@@ -6,7 +6,8 @@ defmodule WebDevUtils.MixProject do
   def project do
     [
       app: :web_dev_utils,
-      description: "Library to enable awesome local development for websites and web applications",
+      description:
+        "Library to enable awesome local development for websites and web applications",
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
@@ -25,7 +26,7 @@ defmodule WebDevUtils.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:file_system, "~> 0.2"},
+      {:file_system, "~> 1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev}
 
       # {:dep_from_hexpm, "~> 0.3.0"},
