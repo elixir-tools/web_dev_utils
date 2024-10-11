@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://github.com/elixir-tools/web_dev_utils/compare/v0.1.1...v0.2.0) (2024-10-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* The live reload function now sends just the message
+
+### Features
+
+* improve live reload ([#4](https://github.com/elixir-tools/web_dev_utils/issues/4)) ([be0e530](https://github.com/elixir-tools/web_dev_utils/commit/be0e5302204519ace2fe0a311721decf568e1a5b))
+
 ## [0.1.1](https://github.com/elixir-tools/web_dev_utils/compare/v0.1.0...v0.1.1) (2024-10-11)
 
 
