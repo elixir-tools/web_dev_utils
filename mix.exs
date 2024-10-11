@@ -6,8 +6,9 @@ defmodule WebDevUtils.MixProject do
   def project do
     [
       app: :web_dev_utils,
-      description: "Library to enable awesome local development for websites and web applications",
-      version: "0.1.1",
+      description:
+        "Library to enable awesome local development for websites and web applications",
+      version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       package: package(),
