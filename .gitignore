@@ -24,3 +24,5 @@ web_dev_utils-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+/test/support/editable.ex
