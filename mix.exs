@@ -8,7 +8,7 @@ defmodule WebDevUtils.MixProject do
       app: :web_dev_utils,
       description:
         "Library to enable awesome local development for websites and web applications",
-      version: "0.2.0",
+      version: "0.3.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
