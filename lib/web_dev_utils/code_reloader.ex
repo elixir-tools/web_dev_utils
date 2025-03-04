@@ -25,12 +25,12 @@ defmodule WebDevUtils.CodeReloader do
     {:ok, :nostate}
   end
 
-  def handle_call(:reload, from, state) do
-    froms = all_waiting([from])
-    mix_compile(Code.ensure_loaded(Mix.Task))
-    Enum.each(froms, &GenServer.reply(&1, :ok))
+  def handle_call(:reload, _from, state) do
+    froms = all_waiting([])
+    result = mix_compile(Code.ensure_loaded(Mix.Task))
+    Enum.each(froms, &GenServer.reply(&1, result))
 
-    {:noreply, state}
+    {:reply, result, state}
   end
 
   defp all_waiting(acc) do
@@ -43,10 +43,11 @@ defmodule WebDevUtils.CodeReloader do
 
   defp mix_compile({:error, _reason}) do
     Logger.error("Could not find Mix")
+    :error
   end
 
   defp mix_compile({:module, Mix.Task}) do
     Mix.Task.reenable("compile.elixir")
-    Mix.Task.run("compile.elixir")
+    Mix.Task.run("compile.elixir", ["--return-errors"])
   end
 end

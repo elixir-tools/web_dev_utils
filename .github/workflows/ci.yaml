@@ -1,0 +1,72 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: main
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: Test (${{matrix.elixir}}/${{matrix.otp}})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        elixir: [1.17.x, 1.18.x]
+        otp: [26.x, 27.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: erlef/setup-beam@v1
+      id: install
+      with:
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
+    - uses: actions/cache@v4
+      id: cache
+      with:
+        path: |
+          deps
+        key: ${{ runner.os }}-mix-${{steps.install.outputs.otp-version}}-${{steps.install.outputs.elixir-version}}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{steps.install.outputs.otp-version}}-${{steps.install.outputs.elixir-version}}-
+
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: mix deps.get
+
+    - name: Run Tests
+      run: mix test
+
+  formatter:
+    runs-on: ubuntu-latest
+    name: Formatter (${{matrix.elixir}}/${{matrix.otp}})
+
+    strategy:
+      matrix:
+        otp: [27.x]
+        elixir: [1.17.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: erlef/setup-beam@v1
+      id: install
+      with:
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
+    - uses: actions/cache@v4
+      id: cache
+      with:
+        path: |
+          deps
+          _build
+        key: ${{ runner.os }}-mix-${{steps.install.outputs.otp-version}}-${{steps.install.outputs.elixir-version}}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-${{steps.install.outputs.otp-version}}-${{steps.install.outputs.elixir-version}}-
+
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: mix deps.get
+
+    - name: Run Formatter
+      run: mix format --check-formatted
