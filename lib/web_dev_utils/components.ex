@@ -5,7 +5,17 @@ defmodule WebDevUtils.Components do
   require EEx
 
   @doc """
-  A component for triggering live reloading via a websocket
+  A component for triggering live reloading via a websocket.
+
+  The url for the websocket connectino is controlled by the `:reload_url` applicaiton config key.
+
+  ## Example
+
+  ```elixir
+  # config/config.exs
+
+  config :web_dev_utils, :reload_url, "wss://sometunnelingdomain/ws"
+  ```
   """
   EEx.function_from_string(
     :def,
